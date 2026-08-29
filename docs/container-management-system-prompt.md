@@ -1,3 +1,9 @@
+> **📚 Project documentation has been generated in this folder.**
+> See: [runbook.md](./runbook.md) · [business-overview.md](./business-overview.md) · [data-model.md](./data-model.md) · [api-reference.md](./api-reference.md) · [architecture.md](./architecture.md)
+
+---
+
+
 # Build Prompt: Container Booking & Tracking System
 
 ## Project Overview
