@@ -501,3 +501,22 @@ def test_multiple_dependency_paths():
             len(path) >= 3 and path[0] == "CG-105" and path[-1] == "CG-102"
             for path in ctx.dependencyContext.dependencyPaths
         )
+
+
+# ---------------------------------------------------------------------------
+# Test 17 — shorthand and case-insensitive ticket ID resolution
+# ---------------------------------------------------------------------------
+
+def test_shorthand_ticket_id_resolution():
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _setup_basic(root, "CG-104")
+
+        # Numeric shorthand: 104 -> CG-104
+        ctx_num = build_report_context("104", root)
+        assert ctx_num.ticketId == "CG-104"
+
+        # Case-insensitive shorthand: cg-104 -> CG-104
+        ctx_case = build_report_context("cg-104", root)
+        assert ctx_case.ticketId == "CG-104"
+

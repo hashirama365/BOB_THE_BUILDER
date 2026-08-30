@@ -287,9 +287,9 @@ def run_report(ticket_id: str, config: Config) -> None:
         sys.exit(1)
 
     # ── Write output files ───────────────────────────────────────────────────
-    md_path = reports_dir / f"{ticket_id}.md"
-    json_path = reports_dir / f"{ticket_id}.json"
-    pdf_path = reports_dir / f"{ticket_id}.pdf"
+    md_path = reports_dir / f"{context.ticketId}.md"
+    json_path = reports_dir / f"{context.ticketId}.json"
+    pdf_path = reports_dir / f"{context.ticketId}.pdf"
 
     render_markdown(markdown, md_path)
     render_json(context, json_path)
