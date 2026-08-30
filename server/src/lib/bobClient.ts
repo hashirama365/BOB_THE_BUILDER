@@ -1,38 +1,35 @@
-interface ChatMessage {
-  role: string;
+import OpenAI from 'openai';
+
+export interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
   content: string;
 }
 
-interface ChatChoice {
-  message: {
-    role: string;
-    content: string;
-  };
-}
+// Lazily initialised — picks up env vars after dotenv loads
+let _client: OpenAI | null = null;
 
-interface ChatCompletionResponse {
-  choices: ChatChoice[];
+function getClient(): OpenAI {
+  if (_client) return _client;
+
+  const apiKey = process.env.LLM_API_KEY;
+  const baseURL = process.env.LLM_BASE_URL;
+
+  if (!apiKey) throw new Error('LLM_API_KEY is not set in server/.env');
+  if (!baseURL) throw new Error('LLM_BASE_URL is not set in server/.env');
+
+  _client = new OpenAI({ apiKey, baseURL });
+  return _client;
 }
 
 export async function callBob(messages: ChatMessage[]): Promise<string> {
-  const url = process.env.BOB_INFERENCE_URL;
-  const apiKey = process.env.BOB_API_KEY;
-  const model = process.env.BOB_MODEL ?? 'auto';
+  const model = process.env.LLM_MODEL ?? 'models/gemini-2.0-flash';
 
-  const response = await fetch(url!, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({ model, messages }),
+  const completion = await getClient().chat.completions.create({
+    model,
+    messages,
   });
 
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Bob API error ${response.status}: ${body}`);
-  }
-
-  const data = (await response.json()) as ChatCompletionResponse;
-  return data.choices[0].message.content;
+  const content = completion.choices[0]?.message?.content;
+  if (!content) throw new Error('Empty response from LLM');
+  return content;
 }

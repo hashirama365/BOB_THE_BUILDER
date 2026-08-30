@@ -7,5 +7,7 @@ Requires-Dist: pyyaml
 Requires-Dist: pypdf
 Requires-Dist: python-docx
 Requires-Dist: click
+Requires-Dist: fpdf2
+Requires-Dist: markdown
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"

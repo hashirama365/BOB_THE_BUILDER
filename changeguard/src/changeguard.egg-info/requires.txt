@@ -3,6 +3,8 @@ pyyaml
 pypdf
 python-docx
 click
+fpdf2
+markdown
 
 [dev]
 pytest
