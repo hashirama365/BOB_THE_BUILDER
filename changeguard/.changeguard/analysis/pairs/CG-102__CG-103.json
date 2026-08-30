@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-102",
+    "CG-103"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.0,
+    "evidence": [
+      "Both tickets rely on CG-101 but do not depend on each other for functional execution."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.95,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "Both tickets require modifications to the same file, server/src/routes/bookings.ts, to implement status-related business logic."
+    ]
+  },
+  "independent": false
+}

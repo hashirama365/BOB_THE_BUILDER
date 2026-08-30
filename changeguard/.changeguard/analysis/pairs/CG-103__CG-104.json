@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-103",
+    "CG-104"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.0,
+    "evidence": [
+      "CG-103 implements auditing logic while CG-104 implements reporting functionality; neither requires the other to function."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.82,
+    "sharedFiles": [
+      "server/src/index.ts"
+    ],
+    "sharedModules": [
+      "server/src"
+    ],
+    "evidence": [
+      "Both tickets require modifications to server/src/index.ts to register new API routes."
+    ]
+  },
+  "independent": false
+}

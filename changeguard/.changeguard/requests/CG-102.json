@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "id": "CG-102",
+  "title": "Block Billing Actions for Containers on Hold",
+  "source": {
+    "path": "CG-102.md",
+    "type": "md"
+  },
+  "summary": "Prevent billing-related actions, including payor record updates and financial processing, for bookings currently in HOLD status.",
+  "requirements": [
+    "The edit booking endpoint (`PUT /api/bookings/:id`) must reject changes to payor fields when the booking is in HOLD status, returning a 403 response with a clear reason",
+    "The cutoff logic in `checkCutoff` inside `server/src/routes/bookings.ts` must be extended to include HOLD status as an additional blocking condition for payor edits",
+    "A new helper `isOnHold(booking)` should be introduced alongside the existing cutoff helpers",
+    "The `BookingFormPage` in the frontend must display a hold-lock message when the booking is in HOLD, similar to the existing cutoff-lock behaviour",
+    "The booking detail page must show a \"Billing blocked \u2014 container on hold\" notice"
+  ],
+  "acceptanceCriteria": [
+    "PUT /api/bookings/:id returns 403 with reason \"Booking is on hold\" when billing fields are changed",
+    "Active bookings not in HOLD behave exactly as before",
+    "Frontend shows the hold-lock message on the booking form when status is HOLD"
+  ],
+  "references": [
+    "server/src/routes/bookings.ts",
+    "client/src/pages/BookingFormPage.tsx",
+    "client/src/pages/BookingDetailPage.tsx",
+    "CG-101 (requires the HOLD status introduced by CG-101)"
+  ]
+}

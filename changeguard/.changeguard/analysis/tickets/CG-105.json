@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-105",
+  "likelyModules": [
+    "server/src/routes",
+    "server/src/policies"
+  ],
+  "likelyFiles": [
+    {
+      "path": "server/src/routes/bookings.ts",
+      "confidence": 1.0,
+      "reason": "This file is the explicit source of the `checkCutoff` function and `LIFECYCLE` array, which will be extracted and replaced with imports from the new policy module."
+    },
+    {
+      "path": "server/src/policies/bookingPolicy.ts",
+      "confidence": 1.0,
+      "reason": "This is a new file explicitly required by the ticket to house the extracted booking cutoff logic and lifecycle array."
+    }
+  ],
+  "relevantSymbols": [
+    {
+      "name": "LIFECYCLE",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "checkCutoff",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "CUTOFF_STATUS_INDEX",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "getStatusIndex",
+      "path": "server/src/policies/bookingPolicy.ts"
+    }
+  ]
+}

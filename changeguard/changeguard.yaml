@@ -1,0 +1,18 @@
+version: 1
+llm:
+  # Google Gemini via the OpenAI-compatible endpoint.
+  # base_url is optional — defaults to the Gemini OpenAI-compat URL in llm.py.
+  # Supported models: gemini-2.0-flash, gemini-1.5-pro, gemini-1.5-flash, etc.
+  model: models/gemini-3.1-flash-lite
+repository:
+  path: ..
+change_requests:
+  inbox: ../change-requests/inbox
+  attachments: ../change-requests/attachments
+output:
+  root: ./.changeguard
+ingestion:
+  allowed_extensions: [.md, .txt, .pdf, .docx]
+analysis:
+  dependency_confidence_threshold: 0.70
+  collision_confidence_threshold: 0.70

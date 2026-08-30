@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-101",
+  "likelyModules": [
+    "server/src/routes",
+    "client/src/components",
+    "client/src/pages",
+    "docs"
+  ],
+  "likelyFiles": [
+    {
+      "path": "server/src/routes/bookings.ts",
+      "confidence": 0.98,
+      "reason": "This file contains the core booking lifecycle logic, the LIFECYCLE array, the cutoff enforcement logic, the existing advance-status endpoint, and will host the new /hold and /release-hold API endpoints."
+    },
+    {
+      "path": "client/src/components/StatusBadge.tsx",
+      "confidence": 0.95,
+      "reason": "The ticket explicitly requires this component to render a distinct color for the new HOLD status, necessitating an update to its STATUS_STYLES mapping."
+    },
+    {
+      "path": "client/src/pages/BookingDetailPage.tsx",
+      "confidence": 0.88,
+      "reason": "This page displays a booking's status and actions. It will need to display the new HOLD badge, potentially update the StatusTimeline, and implement UI for placing on hold and releasing hold."
+    },
+    {
+      "path": "client/src/pages/BookingsListPage.tsx",
+      "confidence": 0.8,
+      "reason": "This page lists bookings with their statuses. It will implicitly display the new HOLD status via the StatusBadge component and may require updates to its filters or display logic to incorporate HOLD."
+    },
+    {
+      "path": "docs/data-model.md",
+      "confidence": 0.9,
+      "reason": "The 'Status Lifecycle' section in the data model documentation needs to be updated to include the new HOLD status and its position in the workflow."
+    },
+    {
+      "path": "docs/api-reference.md",
+      "confidence": 0.9,
+      "reason": "This document will need to be updated to include the new POST /api/bookings/:id/hold and POST /api/bookings/:id/release-hold endpoints, and to update the description of POST /api/bookings/:id/advance-status to reflect the inability to advance from HOLD."
+    }
+  ],
+  "relevantSymbols": [
+    {
+      "name": "LIFECYCLE",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "CUTOFF_STATUS_INDEX",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "checkCutoff",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "advance-status",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "STATUS_STYLES",
+      "path": "client/src/components/StatusBadge.tsx"
+    }
+  ]
+}

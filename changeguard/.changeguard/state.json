@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": {
+    "CG-101": {
+      "status": "complete"
+    },
+    "CG-102": {
+      "status": "complete"
+    },
+    "CG-103": {
+      "status": "complete"
+    },
+    "CG-104": {
+      "status": "complete"
+    },
+    "CG-105": {
+      "status": "complete"
+    }
+  }
+}

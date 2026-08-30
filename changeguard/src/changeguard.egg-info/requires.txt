@@ -1,0 +1,8 @@
+openai
+pyyaml
+pypdf
+python-docx
+click
+
+[dev]
+pytest

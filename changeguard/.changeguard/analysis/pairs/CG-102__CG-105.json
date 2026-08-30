@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-102",
+    "CG-105"
+  ],
+  "logicalDependency": {
+    "exists": true,
+    "prerequisite": "CG-105",
+    "dependent": "CG-102",
+    "confidence": 0.95,
+    "evidence": [
+      "Ticket CG-102 requires extending the `checkCutoff` function specifically within `server/src/routes/bookings.ts`.",
+      "Ticket CG-105 refactors by moving the `checkCutoff` function and `LIFECYCLE` array from `server/src/routes/bookings.ts` to `server/src/policies/bookingPolicy.ts`.",
+      "Therefore, CG-102's implementation must adapt to the new location of `checkCutoff` introduced by CG-105's refactoring."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 1.0,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "Both tickets directly affect the `checkCutoff` function and the `LIFECYCLE` array.",
+      "Ticket CG-102 modifies these entities in `server/src/routes/bookings.ts`, while Ticket CG-105 moves these same entities out of `server/src/routes/bookings.ts`."
+    ]
+  },
+  "independent": false
+}
