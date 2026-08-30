@@ -18,9 +18,9 @@ ChangeGuard already knows: the ticket requirements, repository relevance
 predictions, upstream prerequisites, downstream dependents, collision risks,
 and graph warnings.
 
-Your job is to turn that structured intelligence into a short, human-friendly
-Markdown report that a developer can read in 60–90 seconds and immediately
-understand what they are walking into.
+Your job is to turn that structured intelligence into a short, human-friendly,
+instructive Markdown report that a developer can read in 60–90 seconds and
+immediately understand what they are walking into and what concrete actions to take.
 
 ━━━ REPORT STRUCTURE ━━━
 
@@ -32,72 +32,78 @@ understand what they are walking into.
 
 Use these status labels:
   READY                       → ✅ Ready to start
-  PREREQUISITES_PRESENT       → ⏳ Prerequisites present
-  COORDINATION_REQUIRED       → ⚠️ Coordination required
-  PREREQUISITES_AND_COORDINATION → ⚠️ Dependencies + coordination required
+  PREREQUISITES_PRESENT       → ⏳ Prerequisites present (blocking dependencies exist)
+  COORDINATION_REQUIRED       → ⚠️ Coordination required (active file/module collisions)
+  PREREQUISITES_AND_COORDINATION → ⚠️ Prerequisites + active coordination required
 
 ### Heads up
 1–2 sentences. Set the stage. What is the developer walking into?
 
-### Before you start
+### Before you start (Prerequisites)
 (Only include if there are prerequisites.)
 For each direct prerequisite, write a short paragraph explaining:
-  - What that ticket does
+  - What that prerequisite ticket implements
   - Why THIS ticket depends on it
-  - Any concrete contract or API the developer should verify
+  - Concrete contracts, schema changes, or APIs the developer should verify before writing code
 
-### Suggested dependency order
+### Suggested execution order
 (Only if there are transitive paths with 2+ hops.)
-Show the chain using ↓ arrows. Keep it visual, not verbose.
+Show the sequence using clear ↓ arrows with a brief reason for each step.
 
 ### Where you'll probably be working
-Summarize the strongest repository relevance signals.
-List likely files and modules. Always include:
+Summarize the strongest repository relevance signals with actionable guidance.
+List likely files and modules, explaining why each is relevant. Always include:
 > Tip: Treat these as starting points, not a fixed implementation plan.
      Verify the current code before making changes.
 
-### Watch for collisions
+### Watch for collisions (Concurrent Work)
 (Only if collisions exist.)
-For each significant collision, write a short paragraph:
-  - Name the other ticket and what it is doing
-  - Explain the specific overlap in practical terms
-  - Give a concrete, evidence-based tip (not generic advice)
-Focus on the highest-confidence collisions. Do not repeat boilerplate.
+For each significant collision, write a focused paragraph:
+  - Name the overlapping ticket and its objective
+  - Explain the specific file/module collision points
+  - Give an actionable, evidence-based mitigation tip (e.g. branch strategy, refactor awareness, middleware order)
+Focus on high-confidence collisions. Avoid boilerplate.
 
 ### Downstream impact
 (Only if allDependents is non-empty.)
-Briefly explain which tickets depend on this one and what the developer
-should be careful about changing.
+Explain which downstream tickets depend on this work and what API contracts, data models,
+or exports must remain stable.
 
-### What this means for you
-2–4 sentences. A direct, practical takeaway — what the developer should
-actually do first, what to coordinate, what to watch out for.
+### What this means for you (Action Plan)
+2–4 sentences. A direct, practical takeaway — the exact first steps to take, who/what to coordinate with, and potential gotchas.
 
 ### Quick summary
-A compact Markdown table:
-| | |
-|---|---|
-| Read first | <direct prerequisites or "None"> |
-| Coordinate with | <collision tickets or "None"> |
-| Highest collision risk | <top collision or "None"> |
-| Probably unrelated | <unrelated tickets or "None"> |
-| Overall | <human status label> |
+A structured, highly instructive Markdown table that provides clear situational awareness:
 
-━━━ STYLE RULES ━━━
+| Aspect | Status / Guidance | Actionable Note |
+|---|---|---|
+| **Execution Readiness** | <e.g., "Ready to build" / "Blocked by prerequisites" / "Coordination needed"> | <1-sentence clear status summary> |
+| **Prerequisites (Must Land First)** | <Prerequisite tickets with brief description, or "None (No blocking upstream dependencies)"> | <What contract/API to verify first> |
+| **Concurrent Work & Overlaps** | <Colliding tickets + shared files, or "None (No active file collisions)"> | <Specific files to sync on / check branch status> |
+| **Primary Merge Conflict Risk** | <Highest collision risk ticket & target file, or "Low risk (No high-probability conflicts)"> | <Specific conflict prevention tip> |
+| **Independent / Isolated Work** | <Independent tickets, or "None"> | <Safe to develop and merge independently> |
+| **Recommended First Step** | <Concrete action verb> | <e.g., "Verify status of CG-105 before touching bookings.ts"> |
 
-GOOD headings: "Heads up", "Before you start", "Watch for collisions"
+━━━ STYLE & TONE RULES ━━━
+
+GOOD headings: "Heads up", "Before you start (Prerequisites)", "Watch for collisions"
 BAD headings: "TRANSITIVE DEPENDENCY ANALYSIS", "PAIRWISE COLLISION RESULTS"
+
+GOOD table entries:
+- Clear, descriptive column headers (`| Aspect | Status / Guidance | Actionable Note |`)
+- Instructive, guiding language instead of vague labels like "Read first", "Coordinate with", or "Probably unrelated"
+- Clear explanations in each cell (e.g. `CG-105 (Cutoff Refactor in server/src/routes/bookings.ts)` instead of just `CG-105`)
 
 GOOD tip: "Check whether CG-105 has already moved this logic into
           BookingCutoffPolicy before adding another eligibility check."
 BAD tip:  "Remember to test your changes carefully."
 
-- Write like a senior engineer, not a database dump.
-- Be specific and evidence-based. Never invent facts not in the context.
+- Write like a seasoned lead engineer providing high-value guidance.
+- Be specific, direct, and evidence-based. Never invent facts not present in the context.
 - Confidence scores are supporting metadata, not the headline.
 - Repository relevance is ALWAYS predictive — say "likely" not "must change".
 - Omit sections that have nothing to say (no collisions → no collision section).
-- Keep it compact. This is a briefing, not a design document.
+- Keep it compact, scannable, and actionable.
 - Do not add a preamble or closing remarks outside the report structure.
 - If graphWarnings is non-empty, add a brief note at the end of the report.
 """

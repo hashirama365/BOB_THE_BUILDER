@@ -104,16 +104,28 @@ def render_pdf(markdown: str, out_path: Path) -> None:
 
     # ── Convert Markdown → HTML body fragment ─────────────────────────────────
     # fpdf2's write_html expects a body fragment (no <html>/<head>/<body> tags)
+    import re
+
     html_body = md_lib.markdown(
         sanitized,
         extensions=["tables", "fenced_code"],
     )
 
-    # ── Build PDF ─────────────────────────────────────────────────────────────
-    class StyledPDF(FPDF, HTMLMixin):
-        pass
+    # fpdf2 cannot parse nested inline tags inside <td>/<th>; strip all inner tags
+    def _clean_cell(m: re.Match) -> str:
+        tag, attrs, inner = m.group(1), m.group(2), m.group(3)
+        cleaned = re.sub(r"<[^>]+>", "", inner)
+        return f"<{tag}{attrs}>{cleaned}</{tag}>"
 
-    pdf = StyledPDF()
+    html_body = re.sub(
+        r"<(td|th)\b([^>]*)>(.*?)</\1>",
+        _clean_cell,
+        html_body,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+
+    # ── Build PDF ─────────────────────────────────────────────────────────────
+    pdf = FPDF()
     pdf.set_margins(left=20, top=20, right=20)
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=20)

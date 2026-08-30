@@ -20,6 +20,10 @@
     {
       "id": "CG-105",
       "title": "Refactor Booking Cutoff Logic into a Shared Policy Module"
+    },
+    {
+      "id": "CG-106",
+      "title": "Enforce Route Consistency Between Bookings and Voyages"
     }
   ],
   "edges": [
@@ -76,6 +80,14 @@
     {
       "type": "change_collision",
       "tickets": [
+        "CG-101",
+        "CG-106"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
         "CG-102",
         "CG-103"
       ],
@@ -98,6 +110,14 @@
     {
       "type": "change_collision",
       "tickets": [
+        "CG-102",
+        "CG-106"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
         "CG-103",
         "CG-104"
       ],
@@ -114,10 +134,34 @@
     {
       "type": "change_collision",
       "tickets": [
+        "CG-103",
+        "CG-106"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
         "CG-104",
         "CG-105"
       ],
       "confidence": 0.9
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-104",
+        "CG-106"
+      ],
+      "confidence": 0.75
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-105",
+        "CG-106"
+      ],
+      "confidence": 0.95
     }
   ],
   "independentTickets": []

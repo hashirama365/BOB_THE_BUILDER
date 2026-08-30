@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-103",
+    "CG-106"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.0,
+    "evidence": [
+      "The tickets address unrelated functional requirements (audit logging vs route validation)."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.95,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "Both tickets modify server/src/routes/bookings.ts to add functional logic to different API endpoints."
+    ]
+  },
+  "independent": false
+}

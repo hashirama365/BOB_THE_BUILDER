@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-104",
+    "CG-106"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.0,
+    "evidence": [
+      "The tickets address unrelated functional areas: data export versus data integrity/validation."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.75,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "Both tickets rely on server/src/routes/bookings.ts; CG-104 uses it as a reference for filter logic, while CG-106 performs heavy modifications to its POST/PUT request handlers."
+    ]
+  },
+  "independent": false
+}

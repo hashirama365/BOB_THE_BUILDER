@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-102",
+    "CG-106"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.0,
+    "evidence": [
+      "The tickets address unrelated functional requirements (billing holds vs. route/voyage validation) and do not have a functional prerequisite relationship."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.95,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts",
+      "client/src/pages/BookingFormPage.tsx"
+    ],
+    "sharedModules": [
+      "server/src/routes",
+      "client/src/pages"
+    ],
+    "evidence": [
+      "Both tickets modify server/src/routes/bookings.ts to add validation logic to the PUT /api/bookings/:id endpoint and update the frontend BookingFormPage.tsx component."
+    ]
+  },
+  "independent": false
+}

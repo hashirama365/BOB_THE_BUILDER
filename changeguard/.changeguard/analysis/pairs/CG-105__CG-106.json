@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-105",
+    "CG-106"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.0,
+    "evidence": [
+      "CG-105 is a refactoring task for code organization, while CG-106 is a functional validation requirement; neither ticket's success strictly depends on the other."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.95,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "Both tickets modify server/src/routes/bookings.ts; CG-105 removes logic from it, while CG-106 adds validation logic to the same route handlers."
+    ]
+  },
+  "independent": false
+}

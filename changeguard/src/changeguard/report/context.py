@@ -355,32 +355,6 @@ def _find_unrelated_tickets(
 # ---------------------------------------------------------------------------
 
 
-def _resolve_ticket_id(ticket_id: str, requests_dir: Path) -> str:
-    """Resolve ticket ID to canonical ID matching actual request files on disk.
-
-    Supports case-insensitivity (cg-104 -> CG-104) and numeric shorthands (104 -> CG-104).
-    """
-    if requests_dir.exists():
-        req_files = list(requests_dir.glob("*.json"))
-        # 1. Exact match
-        for req_file in req_files:
-            if req_file.stem == ticket_id:
-                return req_file.stem
-        # 2. Case-insensitive match (e.g. cg-104 -> CG-104)
-        for req_file in req_files:
-            if req_file.stem.upper() == ticket_id.upper():
-                return req_file.stem
-        # 3. CG- prefix (e.g. 104 -> CG-104)
-        for req_file in req_files:
-            if req_file.stem.upper() == f"CG-{ticket_id.upper()}":
-                return req_file.stem
-        # 4. Suffix match (e.g. 104 -> ABC-104)
-        for req_file in req_files:
-            if req_file.stem.upper().endswith(f"-{ticket_id.upper()}"):
-                return req_file.stem
-    return ticket_id
-
-
 def build_report_context(ticket_id: str, output_root: Path) -> TicketReportContext:
     """Assemble a TicketReportContext for the given ticket.
 
@@ -400,16 +374,36 @@ def build_report_context(ticket_id: str, output_root: Path) -> TicketReportConte
     pairs_dir = output_root / "analysis" / "pairs"
     graph_path = output_root / "change-graph.json"
 
-    # ── 1. Load ticket request ───────────────────────────────────────────────
-    resolved_id = _resolve_ticket_id(ticket_id, requests_dir)
-    request_path = requests_dir / f"{resolved_id}.json"
+    # ── 1. Resolve & Load ticket request ─────────────────────────────────────
+    normalized_id = ticket_id.strip()
+    request_path = requests_dir / f"{normalized_id}.json"
+
+    if not request_path.exists():
+        candidates = [
+            normalized_id.upper(),
+            f"CG-{normalized_id}" if normalized_id.isdigit() else f"CG-{normalized_id.upper()}",
+        ]
+        for cand in candidates:
+            if (requests_dir / f"{cand}.json").exists():
+                normalized_id = cand
+                request_path = requests_dir / f"{cand}.json"
+                break
+        else:
+            # Case-insensitive scan
+            if requests_dir.exists():
+                for f in requests_dir.glob("*.json"):
+                    if f.stem.lower() == normalized_id.lower() or f.stem.lower() == f"cg-{normalized_id.lower()}":
+                        normalized_id = f.stem
+                        request_path = f
+                        break
+
     if not request_path.exists():
         raise MissingTicketError(
             f"Ticket not found: no request file at {request_path}.\n"
             "Run 'changeguard run' first to process the inbox."
         )
-    ticket_id = resolved_id
     request_data = json.loads(request_path.read_text(encoding="utf-8"))
+    ticket_id = request_data.get("id", request_path.stem)
 
     # ── 2. Load repository relevance analysis ────────────────────────────────
     relevance_path = relevance_dir / f"{ticket_id}.json"

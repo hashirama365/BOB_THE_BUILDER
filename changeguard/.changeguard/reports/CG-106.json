@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-106",
+  "title": "Enforce Route Consistency Between Bookings and Voyages",
+  "status": "COORDINATION_REQUIRED",
+  "dependencyContext": {
+    "directPrerequisites": [],
+    "allPrerequisites": [],
+    "dependencyPaths": [],
+    "directDependents": [],
+    "allDependents": []
+  },
+  "repositoryRelevance": {
+    "likelyModules": [
+      "server/src/routes",
+      "client/src/pages",
+      "server/src/db"
+    ],
+    "likelyFiles": [
+      {
+        "path": "server/src/routes/bookings.ts",
+        "confidence": 0.98,
+        "reason": "Needs new validation logic in POST and PUT handlers to verify booking route against the assigned voyage."
+      },
+      {
+        "path": "client/src/pages/BookingFormPage.tsx",
+        "confidence": 0.95,
+        "reason": "Frontend form must implement client-side synchronization between route and voyage selections."
+      },
+      {
+        "path": "server/src/db/seed.ts",
+        "confidence": 0.9,
+        "reason": "Requirement explicitly mandates fixing the route data for booking BK-20250016."
+      }
+    ],
+    "relevantSymbols": [
+      {
+        "name": "router.post('/')",
+        "path": "server/src/routes/bookings.ts"
+      },
+      {
+        "name": "router.put('/:id')",
+        "path": "server/src/routes/bookings.ts"
+      },
+      {
+        "name": "BookingFormPage",
+        "path": "client/src/pages/BookingFormPage.tsx"
+      },
+      {
+        "name": "BK-20250016",
+        "path": "server/src/db/seed.ts"
+      }
+    ]
+  },
+  "collisions": [
+    {
+      "ticketId": "CG-101",
+      "confidence": 0.95,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts"
+      ],
+      "sharedModules": [
+        "server/src/routes"
+      ],
+      "evidence": [
+        "Both tickets modify server/src/routes/bookings.ts to implement new business logic and validation rules."
+      ]
+    },
+    {
+      "ticketId": "CG-102",
+      "confidence": 0.95,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts",
+        "client/src/pages/BookingFormPage.tsx"
+      ],
+      "sharedModules": [
+        "server/src/routes",
+        "client/src/pages"
+      ],
+      "evidence": [
+        "Both tickets modify server/src/routes/bookings.ts to add validation logic to the PUT /api/bookings/:id endpoint and update the frontend BookingFormPage.tsx component."
+      ]
+    },
+    {
+      "ticketId": "CG-103",
+      "confidence": 0.95,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts"
+      ],
+      "sharedModules": [
+        "server/src/routes"
+      ],
+      "evidence": [
+        "Both tickets modify server/src/routes/bookings.ts to add functional logic to different API endpoints."
+      ]
+    },
+    {
+      "ticketId": "CG-105",
+      "confidence": 0.95,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts"
+      ],
+      "sharedModules": [
+        "server/src/routes"
+      ],
+      "evidence": [
+        "Both tickets modify server/src/routes/bookings.ts; CG-105 removes logic from it, while CG-106 adds validation logic to the same route handlers."
+      ]
+    },
+    {
+      "ticketId": "CG-104",
+      "confidence": 0.75,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts"
+      ],
+      "sharedModules": [
+        "server/src/routes"
+      ],
+      "evidence": [
+        "Both tickets rely on server/src/routes/bookings.ts; CG-104 uses it as a reference for filter logic, while CG-106 performs heavy modifications to its POST/PUT request handlers."
+      ]
+    }
+  ],
+  "unrelatedTickets": []
+}

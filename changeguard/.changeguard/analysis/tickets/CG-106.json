@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-106",
+  "likelyModules": [
+    "server/src/routes",
+    "client/src/pages",
+    "server/src/db"
+  ],
+  "likelyFiles": [
+    {
+      "path": "server/src/routes/bookings.ts",
+      "confidence": 0.98,
+      "reason": "Needs new validation logic in POST and PUT handlers to verify booking route against the assigned voyage."
+    },
+    {
+      "path": "client/src/pages/BookingFormPage.tsx",
+      "confidence": 0.95,
+      "reason": "Frontend form must implement client-side synchronization between route and voyage selections."
+    },
+    {
+      "path": "server/src/db/seed.ts",
+      "confidence": 0.9,
+      "reason": "Requirement explicitly mandates fixing the route data for booking BK-20250016."
+    }
+  ],
+  "relevantSymbols": [
+    {
+      "name": "router.post('/')",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "router.put('/:id')",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "BookingFormPage",
+      "path": "client/src/pages/BookingFormPage.tsx"
+    },
+    {
+      "name": "BK-20250016",
+      "path": "server/src/db/seed.ts"
+    }
+  ]
+}

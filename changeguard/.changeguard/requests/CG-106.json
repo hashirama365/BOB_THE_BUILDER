@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0",
+  "id": "CG-106",
+  "title": "Enforce Route Consistency Between Bookings and Voyages",
+  "source": {
+    "path": "CG-106.md",
+    "type": "md"
+  },
+  "summary": "Resolve route mismatch issues where bookings can be registered under a route that conflicts with their assigned voyage's trade lane.",
+  "requirements": [
+    "Add server-side validation in server/src/routes/bookings.ts (POST /api/bookings and PUT /api/bookings/:id) verifying that the booking route matches the assigned voyage's route.",
+    "Return a 400 Bad Request with an explanatory error message when a route mismatch is submitted.",
+    "Ensure the frontend booking form (client/src/pages/BookingFormPage.tsx) keeps route and voyage selection synchronized, preventing incompatible voyage/route combinations.",
+    "Update server/src/db/seed.ts for booking BK-20250016 (container SWRE3624492) so its route aligns with voyage CAR-2503.",
+    "Ensure the bookings list and tracking boards accurately filter and display bookings by their verified route."
+  ],
+  "acceptanceCriteria": [
+    "Booking creation (POST /api/bookings) rejects mismatched route and voyage combinations with HTTP 400.",
+    "Booking update (PUT /api/bookings/:id) rejects route and voyage changes that do not match with HTTP 400.",
+    "Booking BK-20250016 / container SWRE3624492 is visible on the JAX-SJU board with matching booking and voyage routes.",
+    "Frontend booking form prevents invalid route/voyage combinations."
+  ],
+  "references": [
+    "server/src/routes/bookings.ts",
+    "server/src/db/seed.ts",
+    "client/src/pages/BookingFormPage.tsx",
+    "docs/data-model.md"
+  ]
+}
