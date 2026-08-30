@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-103",
+  "likelyModules": [
+    "server/src/audit",
+    "server/src/db",
+    "server/src/routes"
+  ],
+  "likelyFiles": [
+    {
+      "path": "server/src/audit/auditLog.ts",
+      "confidence": 1.0,
+      "reason": "New module required for audit event logic and SQLite interaction."
+    },
+    {
+      "path": "server/src/db/schema.sql",
+      "confidence": 1.0,
+      "reason": "Must define the new audit_events table schema."
+    },
+    {
+      "path": "server/src/routes/bookings.ts",
+      "confidence": 0.95,
+      "reason": "Needs modifications to the hold/release-hold endpoints to trigger audit logging."
+    },
+    {
+      "path": "server/src/index.ts",
+      "confidence": 0.9,
+      "reason": "Needs to register the new audit endpoint /api/audit/events."
+    }
+  ],
+  "relevantSymbols": [
+    {
+      "name": "emitAuditEvent",
+      "path": "server/src/audit/auditLog.ts"
+    },
+    {
+      "name": "audit_events",
+      "path": "server/src/db/schema.sql"
+    },
+    {
+      "name": "POST /api/bookings/:id/hold",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "POST /api/bookings/:id/release-hold",
+      "path": "server/src/routes/bookings.ts"
+    }
+  ]
+}

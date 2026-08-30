@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-104",
+  "likelyModules": [
+    "server/src/routes",
+    "client/src/pages"
+  ],
+  "likelyFiles": [
+    {
+      "path": "server/src/routes/export.ts",
+      "confidence": 1.0,
+      "reason": "This is a new route file explicitly required by the ticket to handle the CSV export endpoint."
+    },
+    {
+      "path": "server/src/index.ts",
+      "confidence": 1.0,
+      "reason": "Explicitly required to mount the new '/api/bookings/export' router."
+    },
+    {
+      "path": "client/src/pages/BookingsListPage.tsx",
+      "confidence": 1.0,
+      "reason": "Explicitly required to add the 'Export CSV' button and trigger the download using current filter state."
+    }
+  ],
+  "relevantSymbols": [
+    {
+      "name": "db",
+      "path": "server/src/db/database.ts"
+    },
+    {
+      "name": "GET /api/bookings (query parameter handling)",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "router",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "app.use",
+      "path": "server/src/index.ts"
+    },
+    {
+      "name": "useSearchParams",
+      "path": "client/src/pages/BookingsListPage.tsx"
+    },
+    {
+      "name": "Booking interface",
+      "path": "client/src/pages/BookingsListPage.tsx"
+    },
+    {
+      "name": "Filters interface",
+      "path": "client/src/pages/BookingsListPage.tsx"
+    }
+  ]
+}

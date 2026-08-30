@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0",
+  "nodes": [
+    {
+      "id": "CG-101",
+      "title": "Add Container Hold Status"
+    },
+    {
+      "id": "CG-102",
+      "title": "Block Billing Actions for Containers on Hold"
+    },
+    {
+      "id": "CG-103",
+      "title": "Emit Audit Events on Hold Status Transitions"
+    },
+    {
+      "id": "CG-104",
+      "title": "Add CSV Export for Bookings List"
+    },
+    {
+      "id": "CG-105",
+      "title": "Refactor Booking Cutoff Logic into a Shared Policy Module"
+    }
+  ],
+  "edges": [
+    {
+      "type": "logical_dependency",
+      "from": "CG-101",
+      "to": "CG-102",
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-101",
+        "CG-102"
+      ],
+      "confidence": 0.92
+    },
+    {
+      "type": "logical_dependency",
+      "from": "CG-101",
+      "to": "CG-103",
+      "confidence": 0.98
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-101",
+        "CG-103"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-101",
+        "CG-104"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "type": "logical_dependency",
+      "from": "CG-105",
+      "to": "CG-101",
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-101",
+        "CG-105"
+      ],
+      "confidence": 1.0
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-102",
+        "CG-103"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "type": "logical_dependency",
+      "from": "CG-105",
+      "to": "CG-102",
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-102",
+        "CG-105"
+      ],
+      "confidence": 1.0
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-103",
+        "CG-104"
+      ],
+      "confidence": 0.82
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-103",
+        "CG-105"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "type": "change_collision",
+      "tickets": [
+        "CG-104",
+        "CG-105"
+      ],
+      "confidence": 0.9
+    }
+  ],
+  "independentTickets": []
+}

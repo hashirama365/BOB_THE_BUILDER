@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "changeguard"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = [
+    "openai",
+    "pyyaml",
+    "pypdf",
+    "python-docx",
+    "click",
+    "fpdf2",
+    "markdown",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+changeguard = "changeguard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-102",
+  "likelyModules": [
+    "server/src/routes",
+    "client/src/pages"
+  ],
+  "likelyFiles": [
+    {
+      "path": "server/src/routes/bookings.ts",
+      "confidence": 0.98,
+      "reason": "This file contains the PUT /api/bookings/:id endpoint, the checkCutoff function that needs extension, and is where the new isOnHold helper should be introduced. It directly controls server-side billing action blocking."
+    },
+    {
+      "path": "client/src/pages/BookingFormPage.tsx",
+      "confidence": 0.95,
+      "reason": "The frontend BookingFormPage is required to display a hold-lock message similar to the existing cutoff-lock behavior when a booking is in HOLD status, particularly impacting payor fields."
+    },
+    {
+      "path": "client/src/pages/BookingDetailPage.tsx",
+      "confidence": 0.9,
+      "reason": "The booking detail page in the frontend must show a 'Billing blocked \u2014 container on hold' notice, requiring UI logic to detect and display this message."
+    }
+  ],
+  "relevantSymbols": [
+    {
+      "name": "checkCutoff",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "LIFECYCLE",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "isOnHold",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "router.put('/:id')",
+      "path": "server/src/routes/bookings.ts"
+    },
+    {
+      "name": "BookingFormPage",
+      "path": "client/src/pages/BookingFormPage.tsx"
+    },
+    {
+      "name": "BookingDetailPage",
+      "path": "client/src/pages/BookingDetailPage.tsx"
+    }
+  ]
+}

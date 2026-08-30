@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0",
+  "ticketId": "CG-103",
+  "title": "Emit Audit Events on Hold Status Transitions",
+  "status": "PREREQUISITES_AND_COORDINATION",
+  "dependencyContext": {
+    "directPrerequisites": [
+      "CG-101"
+    ],
+    "allPrerequisites": [
+      "CG-101",
+      "CG-105"
+    ],
+    "dependencyPaths": [
+      [
+        "CG-105",
+        "CG-101",
+        "CG-103"
+      ]
+    ],
+    "directDependents": [],
+    "allDependents": []
+  },
+  "repositoryRelevance": {
+    "likelyModules": [
+      "server/src/audit",
+      "server/src/db",
+      "server/src/routes"
+    ],
+    "likelyFiles": [
+      {
+        "path": "server/src/audit/auditLog.ts",
+        "confidence": 1.0,
+        "reason": "New module required for audit event logic and SQLite interaction."
+      },
+      {
+        "path": "server/src/db/schema.sql",
+        "confidence": 1.0,
+        "reason": "Must define the new audit_events table schema."
+      },
+      {
+        "path": "server/src/routes/bookings.ts",
+        "confidence": 0.95,
+        "reason": "Needs modifications to the hold/release-hold endpoints to trigger audit logging."
+      },
+      {
+        "path": "server/src/index.ts",
+        "confidence": 0.9,
+        "reason": "Needs to register the new audit endpoint /api/audit/events."
+      }
+    ],
+    "relevantSymbols": [
+      {
+        "name": "emitAuditEvent",
+        "path": "server/src/audit/auditLog.ts"
+      },
+      {
+        "name": "audit_events",
+        "path": "server/src/db/schema.sql"
+      },
+      {
+        "name": "POST /api/bookings/:id/hold",
+        "path": "server/src/routes/bookings.ts"
+      },
+      {
+        "name": "POST /api/bookings/:id/release-hold",
+        "path": "server/src/routes/bookings.ts"
+      }
+    ]
+  },
+  "collisions": [
+    {
+      "ticketId": "CG-101",
+      "confidence": 0.95,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts"
+      ],
+      "sharedModules": [
+        "server/src/routes"
+      ],
+      "evidence": [
+        "Both tickets require modification to the logic in server/src/routes/bookings.ts to implement and integrate the new hold/release functionality."
+      ]
+    },
+    {
+      "ticketId": "CG-102",
+      "confidence": 0.95,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts"
+      ],
+      "sharedModules": [
+        "server/src/routes"
+      ],
+      "evidence": [
+        "Both tickets require modifications to the same file, server/src/routes/bookings.ts, to implement status-related business logic."
+      ]
+    },
+    {
+      "ticketId": "CG-105",
+      "confidence": 0.95,
+      "sharedFiles": [
+        "server/src/routes/bookings.ts"
+      ],
+      "sharedModules": [
+        "server/src/routes"
+      ],
+      "evidence": [
+        "Both tickets require modifications to server/src/routes/bookings.ts to implement their respective logic changes."
+      ]
+    },
+    {
+      "ticketId": "CG-104",
+      "confidence": 0.82,
+      "sharedFiles": [
+        "server/src/index.ts"
+      ],
+      "sharedModules": [
+        "server/src"
+      ],
+      "evidence": [
+        "Both tickets require modifications to server/src/index.ts to register new API routes."
+      ]
+    }
+  ],
+  "unrelatedTickets": []
+}

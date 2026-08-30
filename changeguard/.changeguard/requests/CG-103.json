@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "id": "CG-103",
+  "title": "Emit Audit Events on Hold Status Transitions",
+  "source": {
+    "path": "CG-103.md",
+    "type": "md"
+  },
+  "summary": "Whenever a booking is placed on hold or released from hold, emit a structured audit event to a new audit log module.",
+  "requirements": [
+    "Create a new module `server/src/audit/auditLog.ts` that exposes an `emitAuditEvent` function",
+    "`emitAuditEvent` must write a structured JSON audit record to a dedicated SQLite table `audit_events`",
+    "The audit record must include: event_type, booking_id, booking_number, actor (system), timestamp, before_status, after_status",
+    "The `POST /api/bookings/:id/hold` endpoint (introduced in CG-101) must call `emitAuditEvent` on every successful hold transition",
+    "The `POST /api/bookings/:id/release-hold` endpoint (introduced in CG-101) must call `emitAuditEvent` on every successful release",
+    "Audit records must be append-only \u2014 no updates or deletes",
+    "A new `GET /api/audit/events` endpoint must return the audit log filtered by optional `booking_id` query param"
+  ],
+  "acceptanceCriteria": [
+    "A hold transition results in an audit event record in the database",
+    "A release-hold transition results in an audit event record",
+    "The audit log endpoint returns all events for a given booking",
+    "The audit table and module are entirely new \u2014 no changes to existing tables or routes"
+  ],
+  "references": [
+    "server/src/db/schema.sql (new audit_events table definition)",
+    "server/src/db/database.ts (schema initialization)",
+    "CG-101 (the hold/release-hold endpoints must exist before audit events can be emitted)"
+  ]
+}

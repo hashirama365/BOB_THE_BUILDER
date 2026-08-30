@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-101",
+    "CG-105"
+  ],
+  "logicalDependency": {
+    "exists": true,
+    "prerequisite": "CG-105",
+    "dependent": "CG-101",
+    "confidence": 0.95,
+    "evidence": [
+      "Ticket CG-101 needs to modify the `LIFECYCLE` array and status advance logic (governed by `checkCutoff`), which Ticket CG-105 refactors from `server/src/routes/bookings.ts` to `server/src/policies/bookingPolicy.ts`. If CG-105 executes first, CG-101 must apply its changes to the new location established by CG-105."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 1.0,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "Both tickets directly affect the `LIFECYCLE` array and `checkCutoff` function/logic. Ticket CG-105 moves these elements from `server/src/routes/bookings.ts`, while Ticket CG-101 intends to modify them to add a new status and enforce new status transition rules."
+    ]
+  },
+  "independent": false
+}

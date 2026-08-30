@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-102",
+    "CG-104"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.95,
+    "evidence": [
+      "CG-102's dependency is explicitly stated as CG-101 for the 'HOLD' status, not CG-104.",
+      "CG-104 introduces new export functionality which does not rely on the billing action blocking logic or 'HOLD' status management introduced by CG-102."
+    ]
+  },
+  "changeCollision": {
+    "exists": false,
+    "confidence": 0.9,
+    "sharedFiles": [],
+    "sharedModules": [],
+    "evidence": [
+      "CG-102 modifies `server/src/routes/bookings.ts`, while CG-104 creates a new distinct route file `server/src/routes/export.ts`.",
+      "CG-104 explicitly states 'No changes to the existing bookings route or any other existing file except mounting the new router in `server/src/index.ts`'.",
+      "Frontend changes occur in distinct files: CG-102 affects `BookingFormPage.tsx` and `BookingDetailPage.tsx`, while CG-104 affects `BookingsListPage.tsx`."
+    ]
+  },
+  "independent": true
+}

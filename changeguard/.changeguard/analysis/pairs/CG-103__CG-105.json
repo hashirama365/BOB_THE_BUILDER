@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-103",
+    "CG-105"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.0,
+    "evidence": []
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.95,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "Both tickets require modifications to server/src/routes/bookings.ts to implement their respective logic changes."
+    ]
+  },
+  "independent": false
+}

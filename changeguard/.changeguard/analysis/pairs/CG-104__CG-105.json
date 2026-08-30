@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-104",
+    "CG-105"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 1.0,
+    "evidence": [
+      "CG-104 introduces new export functionality and references existing filter logic, but does not depend on the cutoff enforcement logic refactored by CG-105.",
+      "CG-105 is a refactor of existing cutoff logic and does not depend on the new CSV export functionality introduced by CG-104."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.9,
+    "sharedFiles": [
+      "server/src/routes/bookings.ts"
+    ],
+    "sharedModules": [
+      "server/src/routes"
+    ],
+    "evidence": [
+      "CG-104 references `server/src/routes/bookings.ts` for filter query logic.",
+      "CG-105 directly modifies `server/src/routes/bookings.ts` by extracting the `checkCutoff` function and `LIFECYCLE` array."
+    ]
+  },
+  "independent": false
+}

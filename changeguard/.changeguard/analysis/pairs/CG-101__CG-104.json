@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "tickets": [
+    "CG-101",
+    "CG-104"
+  ],
+  "logicalDependency": {
+    "exists": false,
+    "prerequisite": null,
+    "dependent": null,
+    "confidence": 0.05,
+    "evidence": [
+      "CG-104 (CSV Export) aims to export existing booking data and does not functionally depend on the specific 'HOLD' status introduced by CG-101.",
+      "CG-101 (Add HOLD Status) introduces new status functionality and does not depend on the ability to export bookings for its core operation."
+    ]
+  },
+  "changeCollision": {
+    "exists": true,
+    "confidence": 0.9,
+    "sharedFiles": [
+      "client/src/pages/BookingsListPage.tsx"
+    ],
+    "sharedModules": [
+      "client/src/pages"
+    ],
+    "evidence": [
+      "Ticket CG-101 requires `client/src/pages/BookingsListPage.tsx` to display bookings with the new 'HOLD' status and its distinct badge.",
+      "Ticket CG-104 explicitly requires `client/src/pages/BookingsListPage.tsx` to add an 'Export CSV' button and manage its associated filter state."
+    ]
+  },
+  "independent": false
+}
