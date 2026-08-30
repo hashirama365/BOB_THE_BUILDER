@@ -86,6 +86,10 @@ The script uses `ts-node` to run `server/src/db/seed.ts` directly against the li
 
 > **Safe to re-run.** The seed script truncates all tables before inserting, so you can run it as many times as needed to reset to a clean state.
 
+> **Local-only data.** `server/data/*.db*` is git-ignored and has never been committed to this repo — each developer's database is entirely local. If you create test data by hand (via the UI, a manual API call, etc.) instead of adding it to `seed.ts`, nobody else will see it after you push, even though your code changes go through fine. If you want a teammate to see specific test data, add it to `server/src/db/seed.ts` and have them re-run `npm run seed --prefix server` after pulling.
+
+> **DB Assistant needs its own `.env`.** `server/.env` is also git-ignored (only `server/.env.example` is tracked). A fresh clone has no `.env` at all, so the "DB Assistant" chat page will fail with `"No API key found..."` until you copy `server/.env.example` to `server/.env` and fill in a working `LLM_API_KEY` (Gemini, via Google AI Studio) — this step isn't needed for the rest of the app (bookings, map, dashboard), only for `/chat`.
+
 ---
 
 ## Resetting Data

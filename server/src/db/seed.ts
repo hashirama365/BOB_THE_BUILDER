@@ -812,6 +812,36 @@ function seed(): void {
       requested_gate_in_date: dateOnly(10),
       special_instructions: null,
     },
+
+    // 16. DEMO BUG — route/voyage lane mismatch. Voyage CAR-2503 is a JAX-SJU
+    //     sailing, but this booking's `route` field is (incorrectly) TAC-ANC,
+    //     so it won't show up when the board is filtered to JAX-SJU. Used to
+    //     demo the DB Assistant chat feature diagnosing a "missing booking".
+    {
+      booking_number: 'BK-20250016',
+      route: 'TAC-ANC',
+      voyage_number: 'CAR-2503',
+      container_type: '40GP',
+      container_number: 'SWRE3624492',
+      cargo_description: 'General retail goods - palletized dry goods',
+      gross_weight: 18500,
+      weight_unit: 'KG',
+      hazmat: 0,
+      hazmat_un_number: null, hazmat_imo_class: null, hazmat_packing_group: null,
+      consignor_name: 'Sunbelt Distributors Inc',
+      consignor_address: '4200 Talleyrand Ave, Jacksonville, FL 32206',
+      consignor_contact: 'shipping@sunbeltdist.com',
+      consignee_name: 'Isla Verde Retail Group',
+      consignee_address: 'Calle Loiza 1950, San Juan, PR 00913',
+      consignee_contact: 'receiving@islaverde.com',
+      payor_name: 'Sunbelt Distributors Inc',
+      payor_address: '4200 Talleyrand Ave, Jacksonville, FL 32206',
+      payor_contact: 'billing@sunbeltdist.com',
+      current_status: 'Booking Confirmed',
+      booking_date: dateOnly(0),
+      requested_gate_in_date: dateOnly(5),
+      special_instructions: null,
+    },
   ];
 
   // Insert bookings and their status history + GPS pings in a transaction
