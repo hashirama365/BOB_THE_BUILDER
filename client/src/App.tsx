@@ -5,6 +5,7 @@ import BookingsListPage from './pages/BookingsListPage'
 import BookingFormPage from './pages/BookingFormPage'
 import BookingDetailPage from './pages/BookingDetailPage'
 import MapPage from './pages/MapPage'
+import ChatPage from './pages/ChatPage'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="bookings/:id" element={<BookingDetailPage />} />
           <Route path="bookings/:id/edit" element={<BookingFormPage />} />
           <Route path="map" element={<MapPage />} />
+          <Route path="chat" element={<ChatPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

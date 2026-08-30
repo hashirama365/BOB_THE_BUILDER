@@ -4,6 +4,7 @@ const navItems = [
   { to: '/', label: 'Dashboard', end: true },
   { to: '/bookings', label: 'Bookings' },
   { to: '/map', label: 'Map View' },
+  { to: '/chat', label: 'DB Assistant' },
 ]
 
 export default function Sidebar() {
