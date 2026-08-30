@@ -8,23 +8,45 @@ export interface ChatMessage {
 // Lazily initialised — picks up env vars after dotenv loads
 let _client: OpenAI | null = null;
 
-function getClient(): OpenAI {
-  if (_client) return _client;
+function getClient(): { client: OpenAI; model: string } {
+  let apiKey = process.env.LLM_API_KEY;
+  let baseURL = process.env.LLM_BASE_URL;
+  let model = process.env.LLM_MODEL;
 
-  const apiKey = process.env.LLM_API_KEY;
-  const baseURL = process.env.LLM_BASE_URL;
+  if (!apiKey) {
+    if (process.env.GEMINI_API_KEY) {
+      apiKey = process.env.GEMINI_API_KEY;
+      baseURL = baseURL || 'https://generativelanguage.googleapis.com/v1beta/openai/';
+      model = model || 'models/gemini-2.5-flash';
+    } else if (process.env.BOB_API_KEY) {
+      apiKey = process.env.BOB_API_KEY;
+      baseURL = baseURL || process.env.BOB_INFERENCE_URL || process.env.BOB_BASE_URL || 'https://api.us-east.bob.ibm.com/v1';
+      model = model || process.env.BOB_MODEL || 'auto';
+    }
+  }
 
-  if (!apiKey) throw new Error('LLM_API_KEY is not set in server/.env');
-  if (!baseURL) throw new Error('LLM_BASE_URL is not set in server/.env');
+  if (!apiKey) {
+    throw new Error(
+      'No API key found. Please set LLM_API_KEY or BOB_API_KEY in server/.env'
+    );
+  }
 
-  _client = new OpenAI({ apiKey, baseURL });
-  return _client;
+  baseURL = baseURL || (apiKey.startsWith('AQ.') ? 'https://generativelanguage.googleapis.com/v1beta/openai/' : 'https://api.us-east.bob.ibm.com/v1');
+  baseURL = baseURL.replace(/\/chat\/completions\/?$/, '');
+
+  model = model || (baseURL.includes('generativelanguage.googleapis.com') ? 'models/gemini-2.5-flash' : 'auto');
+
+  if (!_client) {
+    _client = new OpenAI({ apiKey, baseURL });
+  }
+
+  return { client: _client, model };
 }
 
 export async function callBob(messages: ChatMessage[]): Promise<string> {
-  const model = process.env.LLM_MODEL ?? 'models/gemini-2.0-flash';
+  const { client, model } = getClient();
 
-  const completion = await getClient().chat.completions.create({
+  const completion = await client.chat.completions.create({
     model,
     messages,
   });
